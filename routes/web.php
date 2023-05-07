@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\Backend\UserController;
+use App\Http\Controllers\Backend\HomeController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -19,5 +20,6 @@ Route::get('/', function () {
 });
 
 
-Route::resource('/users', UserController::class);
+Route::resource('admin/users', UserController::class);
+Route::get('/admin/homepage/', [HomeController::class, 'index']);
 
