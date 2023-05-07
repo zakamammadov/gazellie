@@ -17,11 +17,11 @@ Users
 <table id="example2" class="table table-bordered table-hover">
                   <thead>
                   <tr>
-                    <th>Rendering engine</th>
-                    <th>Browser</th>
-                    <th>Platform(s)</th>
-                    <th>Engine version</th>
-                    <th>CSS grade</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Action</th>
+                  
                   </tr>
                   </thead>
                   <tbody>
@@ -31,13 +31,17 @@ Users
                         
 
                   <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 4.0
+                    <td>{{$user->name}}</td>
+                    <td>{{$user->email}}
                     </td>
-                    <td>Win 95+</td>
-                    <td> 4</td>
-                    <td>X</td>
+                    <td>{{$user->is_admin}}</td>
+                    <td>
+
+<button class=btn-warning>Edit</button>
+<button class=btn-danger>Delete</button>
+
+                    </td>
+                
                   </tr>
                   @endforeach
 @else
@@ -55,15 +59,7 @@ Users
                   @endif
 
                   </tbody>
-                  <tfoot>
-                  <tr>
-                    <th>Rendering engine</th>
-                    <th>Browser</th>
-                    <th>Platform(s)</th>
-                    <th>Engine version</th>
-                    <th>CSS grade</th>
-                  </tr>
-                  </tfoot>
+            
                 </table>
 
 
