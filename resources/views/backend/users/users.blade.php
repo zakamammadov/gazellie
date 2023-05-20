@@ -34,7 +34,12 @@ Users
                     <td>{{$user->name}}</td>
                     <td>{{$user->email}}
                     </td>
-                    <td>{{$user->is_admin}}</td>
+                    <td>
+                      
+                      {{$user->is_admin}}
+                    
+                    
+                    </td>
                     <td>
 
 <button class=btn-warning>Edit</button>
