@@ -19,7 +19,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::prefix('admin')->group(function(){
+    Route::redirect('/', 'adminlogin');
+    Route::get('/users', [UserController::class, 'index'])->name('admin.users');
+    Route::get('/homepage/', [HomeController::class, 'index'])->name('admin.homepage');
 
-Route::resource('admin/users', UserController::class);
-Route::get('/admin/homepage/', [HomeController::class, 'index']);
+    Route::match(['get', 'post'], '/adminlogin',[UserController::class, 'AdminLogin'])->name('admin.login');
+    Route::get('/logout/', [UserController::class, 'logout'])->name('admin.logout');
+
+
+});
 

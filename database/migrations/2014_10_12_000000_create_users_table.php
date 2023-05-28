@@ -17,12 +17,13 @@ class CreateUsersTable extends Migration
             $table->id('user_id');
             $table->string('name');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->boolean('is_admin');
-            $table->boolean('is_active');
+            $table->boolean('is_admin')->default(0);
+            $table->string('activation_key',60)->nullable();
+            $table->boolean('is_active')->default(0);
             $table->rememberToken();
-            $table->timestamps();
+            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on UPDATE CURRENT_TIMESTAMP'));
         });
     }
 

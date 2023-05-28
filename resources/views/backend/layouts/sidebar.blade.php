@@ -49,26 +49,32 @@
                   <p>Dashboard v1</p>
                 </a>
               </li>
-    
+
             </ul>
           </li>
-      
-         
-         
-         
-          
+
+
+
+
+
 
           <li class="nav-item">
-            <a href="../gallery.html" class="nav-link">
+            <a href="{{route('admin.users')}}" class="nav-link">
               <i class="nav-icon far fa-image"></i>
               <p>
                 Users
               </p>
             </a>
           </li>
-         
-        
-          
+
+          <li class="nav-item">
+            <a href="{{route('admin.logout')}}" class="nav-link">
+              <i class="nav-icon far fa-circle text-danger"></i>
+              <p class="text">Logout</p>
+            </a>
+          </li>
+
+
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
