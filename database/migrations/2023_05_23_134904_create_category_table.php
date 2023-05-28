@@ -15,15 +15,12 @@ class CreateCategoryTable extends Migration
     {
         Schema::create('category', function (Blueprint $table) {
             $table->id();
+            $table->integer('top_cat_id')->nullable();
             $table->string('cat_name_az')->nullable();
             $table->string('cat_name_en')->nullable();
-
             $table->string('cat_name_ru')->nullable();
-
             $table->string('slug')->nullable();
-
-
-
+            $table->softDeletes();
             $table->timestamps();
         });
     }
