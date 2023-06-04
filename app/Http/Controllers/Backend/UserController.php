@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Backend\UserDetal;
 use Auth;
 use Hash;
 class UserController extends Controller
@@ -15,7 +16,19 @@ class UserController extends Controller
     public function index()
     {
 
-$users=User::orderByDesc('created_at')->paginate(10);
+
+        if (request()->filled('search')) {
+            request()->flash();
+            $search = request('search');
+            $users = User::where('name', 'like', "%$search%")
+                ->orWhere('email', 'like', "%$search%")
+                ->orderByDesc('created_at')
+                ->paginate(8)
+                ->appends('search', $search);
+        } else{
+            $users=User::orderByDesc('created_at')->paginate(10);
+
+        }
 return view('backend.users.users')->with('users',$users);
 
     }
@@ -67,9 +80,50 @@ if($id>0){
 
 
 
-    public function create()
+    public function save($id=0)
     {
-        //
+        if($id>0){
+        $this->validate(request(), [
+            'name' => 'required',
+            'email'   => 'required|email'
+        ]);
+    }else{
+        $this->validate(request(), [
+            'name' => 'required',
+            'email'   => 'required|email|unique:users'
+        ]);
+    }
+        $data = request()->only('name', 'email');
+        if (request()->filled('password')) {
+            $data['password'] = Hash::make(request('password'));
+        }
+        $data['is_active'] = request()->has('is_active') && request('is_active') == 1 ? 1 : 0;
+        $data['is_admin'] = request()->has('is_admin') && request('is_admin') == 1 ? 1 : 0;
+
+        if ($id > 0) {
+            $entry = User::where('id', $id)->firstOrFail();
+            $entry->update($data);
+        } else {
+            $entry = User::create($data);
+        }
+
+
+        UserDetal::updateOrCreate(
+            ['user_id' => $entry->id],
+            [
+                'adress'       => request('adress'),
+                'phone'     => request('phone'),
+                'mob_phone' => request('mob_phone')
+            ]
+        );
+
+        return redirect()
+            ->route('admin.users')
+            ->with('message', ($id > 0 ? 'Updated' : 'Saved'))
+            ->with('message_type', 'success');
+
+
+
     }
 
     /**
@@ -125,6 +179,11 @@ if($id>0){
      */
     public function destroy($id)
     {
-        //
+        User::destroy($id);
+
+        return redirect()
+            ->route('admin.users')
+            ->with('message', 'Deleted')
+            ->with('message_type', 'success');
     }
 }

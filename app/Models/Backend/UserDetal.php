@@ -7,13 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserDetal extends Model
 {
-
-    protected $fillable = [
-
-        'user_id',
-        'adress',
-        'phone',
-        'mob_phone'
-    ];
+    protected $table='user_detal';
+    public $timestamps = false;
+    protected $guarded = [];
     use HasFactory;
 }

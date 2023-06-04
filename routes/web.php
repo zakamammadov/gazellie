@@ -29,9 +29,10 @@ Route::prefix('admin')->group(function(){
 //users routes start
 
         Route::match(['get','post'],'/users', [UserController::class, 'index'])->name('admin.users');
-        Route::get('/create',[UserController::class,'form'])->name('user.create');
-        Route::get('/edit/{id}',[UserController::class,'form'])->name('user.edit');
-        Route::post('/create/{id?}', [UserController::class,'create'])->name('yonetim.kullanici.kaydet');
+        Route::get('/create',[UserController::class,'form'])->name('back.user.create');
+        Route::get('/edit/{id}',[UserController::class,'form'])->name('back.user.edit');
+        Route::post('/save/{id?}', [UserController::class,'save'])->name('back.user.save');
+        Route::get('/delete/{id}',[UserController::class,'destroy'])->name('back.user.delete');
 
 
 

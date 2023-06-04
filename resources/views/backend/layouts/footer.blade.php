@@ -21,7 +21,7 @@
 
       <!-- Default box -->
       <div class="card">
-        <div class="card-header">
+        {{-- <div class="card-header">
           <h3 class="card-title">
 
 @yield('title')
@@ -36,9 +36,9 @@
               <i class="fas fa-times"></i>
             </button>
           </div>
-        </div>
+        </div> --}}
         <div class="card-body">
-        
+
 @yield("content")
 
 
