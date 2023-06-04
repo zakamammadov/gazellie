@@ -15,7 +15,7 @@ class UserController extends Controller
     public function index()
     {
 
-$users=User::all();
+$users=User::orderByDesc('created_at')->paginate(10);
 return view('backend.users.users')->with('users',$users);
 
     }
@@ -50,16 +50,23 @@ public function logout(){
 
     return redirect()->route('admin.login');
 }
-
-
-
-
-
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
+
+public function form($id=0){
+$entry= new User;
+if($id>0){
+    $entry=User::find($id);
+}
+       return view ('backend.users.form',compact('entry'));
+
+}
+
+
+
     public function create()
     {
         //
