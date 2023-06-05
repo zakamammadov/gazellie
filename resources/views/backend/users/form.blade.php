@@ -77,4 +77,6 @@ User detal
         </label>
     </div>
 </form>
+
+
 @endsection

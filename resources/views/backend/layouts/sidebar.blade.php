@@ -68,6 +68,29 @@
           </li>
 
           <li class="nav-item">
+            <a href="{{route('admin.categories')}}" class="nav-link">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Category
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('admin.categories')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Category</p>
+                </a>
+              </li>
+
+            </ul>
+          </li>
+
+
+
+
+
+          <li class="nav-item">
             <a href="{{route('admin.logout')}}" class="nav-link">
               <i class="nav-icon far fa-circle text-danger"></i>
               <p class="text">Logout</p>

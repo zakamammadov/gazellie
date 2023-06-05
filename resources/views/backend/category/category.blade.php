@@ -19,15 +19,15 @@ Users
     {{ csrf_field() }}
     <div class="form-group">
         {{-- <label for="search">Search</label> --}}
-        <input type="text" class="form-control form-control-sm" name="search" id="search" placeholder=" Name, Email Search..." value="{{ old('search') }}">
+        <input type="text" class="form-control form-control-sm" name="search" id="search" placeholder=" Category name..." value="{{ old('search') }}">
     </div>&nbsp;&nbsp;
     <button type="submit" class="btn btn-danger">Search</button>&nbsp;&nbsp;&nbsp;&nbsp;
-    <a href="{{ route('admin.users') }}" class="btn btn-warning">Clear</a>
+    <a href="{{ route('admin.categories') }}" class="btn btn-warning">Clear</a>
 </form>
 
 
 <div class="btn-group float-right">
-    <a href="{{ route('back.user.create') }}" class="btn btn-primary">New</a>
+    <a href="{{ route('back.category.create') }}" class="btn btn-primary">New</a>
 </div>
 <br>
 <br>
@@ -38,65 +38,37 @@ Users
                     <tr>
                       <th>№</th>
                       <th>Name</th>
-                      <th>Email</th>
-                      <th>Role</th>
-                      <th>Active</th>
+                      <th>Slug</th>
                       <th>Created date</th>
                       <th>Action</th>
 
                     </tr>
                     </thead>
                     <tbody>
-                      @if (count($users)>0)
+                      @if (count($list)>0)
   @php
-      $say=1;
+      $num=1;
   @endphp
-                      @foreach ($users as $user)
+                      @foreach ($list as $entry)
 
 
                     <tr>
 
-                      <td>{{$say++;}}</td>
-                      <td>{{$user->name}}</td>
-                      <td>{{$user->email}}
+                      <td>{{$num++;}}</td>
+                      <td>{{$entry->cat_name_en}}</td>
+                      <td>{{$entry->slug}}
                       </td>
-
-
-
-
-                      <td>
-
-                          @if ($user->is_admin)
-                          <span class="badge bg-primary">{{'Adminstrator'}}</span>
-                              @else
-
-                                  <span class="badge bg-warning">{{'Customer'}}</span>
-
-                              @endif
-                      </td>
-
-                      <td>
-                          @if ($user->is_active)
-                          <span class="badge bg-primary">{{'Active'}}</span>
-
-                              @else
-                              <span class="badge bg-warning">{{'Passive'}}</span>
-
-                              @endif
-                      </td>
-
-
-                      <td>{{$user->created_at}}
+                      <td>{{$entry->created_at}}
                       </td>
                       <td>
-  <a href="{{route('back.user.edit',$user->id)}}">
+  <a href="{{route('back.category.edit',$entry->id)}}">
                           <i class="fa-regular fa-pen-to-square fa-beat fa-lg" style="color: #1f2251;"></i>
   </a>
   &nbsp;&nbsp;&nbsp;&nbsp;
 
 
 
-                          <a href="{{ route('back.user.delete', $user->id) }}" data-toggle="tooltip" data-placement="top" title="Sil" onclick="return confirm('Are you sure?')">
+                          <a href="{{ route('back.category.delete', $entry->id) }}" data-toggle="tooltip" data-placement="top" title="Sil" onclick="return confirm('Are you sure?')">
 
 
                               <i class="fa-solid fa-trash fa-beat fa-lg" style="color: #511f1f;"></i>
@@ -113,12 +85,9 @@ Users
 
 
   <tr>
-      {{"User not found"}}
+      {{"Category not found"}}
 
     </tr>
-
-
-
 
 
                     @endif
