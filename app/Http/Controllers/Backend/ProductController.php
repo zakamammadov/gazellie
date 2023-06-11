@@ -82,7 +82,7 @@ return view('backend.products.product')->with('list',$list);
             }
             public function destroy($id)
             {
-                $category = Product::find($id);
+                $product = Product::find($id);
                 // $category_product_num = $category->product()->count();
                 // if ($category_product_num>0)
                 // {
@@ -91,10 +91,10 @@ return view('backend.products.product')->with('list',$list);
                 //         ->with('message', "This ategory has $category_product_num products . Bu yüzden silme işlemi yapılmamıştır.")
                 //         ->with('message_type', 'warning');
                 // }
-                $category->product()->detach();
-                $category->delete();
+                // $category->product()->detach();
+                $product->delete();
                 return redirect()
-                    ->route('admin.categories')
+                    ->route('admin.product')
                     ->with('message', 'Deleted')
                     ->with('message_type', 'success');
             }
