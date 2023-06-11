@@ -3,7 +3,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Backend\UserDetal;
+use App\Models\UserDetal;
 use Auth;
 use Hash;
 class UserController extends Controller

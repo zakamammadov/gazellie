@@ -47,6 +47,9 @@ Users
                     </tr>
                     </thead>
                     <tbody>
+                        @if (count($users) == 0)
+                        <tr><td colspan="7" class="text-center">User not found!</td></tr>
+                    @endif
                       @if (count($users)>0)
   @php
       $say=1;

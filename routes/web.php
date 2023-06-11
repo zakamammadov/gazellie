@@ -2,6 +2,7 @@
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\HomeController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\ProductController;
 
 use App\Http\Middleware\Admin;
 
@@ -47,12 +48,21 @@ Route::get('/delete/{id}',[CategoryController::class,'destroy'])->name('back.cat
 //category routes end
 
 
+//product routes start
+Route::group(['prefix' => 'product'], function () {
+    Route::match(['get','post'],'/', [ProductController::class, 'index'])->name('admin.product');
+    Route::get('/create',[ProductController::class,'form'])->name('back.product.create');
+    Route::get('/edit/{id}',[ProductController::class,'form'])->name('back.product.edit');
+    Route::post('/save/{id?}', [ProductController::class,'save'])->name('back.product.save');
+    Route::get('/delete/{id}',[ProductController::class,'destroy'])->name('back.product.delete');
+    });
+    //product routes end
+
+
+
         Route::get('/homepage/', [HomeController::class, 'index'])->name('admin.homepage');
 
     });
-
-
-
     Route::match(['get', 'post'], '/adminlogin',[UserController::class, 'AdminLogin'])->name('admin.login');
     Route::get('/logout/', [UserController::class, 'logout'])->name('admin.logout');
 });

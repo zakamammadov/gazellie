@@ -16,6 +16,8 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    protected $table='users';
+
     protected $fillable = [
 
         'id',
@@ -47,7 +49,7 @@ class User extends Authenticatable
     ];
 
 public function detail(){
-    return $this->hasOne('\App\Models\Backend\UserDetal')->withDefault();
+    return $this->hasOne('\App\Models\UserDetal')->withDefault();
 
 }
 
