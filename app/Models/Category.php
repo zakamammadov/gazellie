@@ -18,7 +18,10 @@ class Category extends Model
     {
         return $this->belongsToMany('App\Models\Product', 'category_product');
     }
-
+    public function bottom_kategoriler()
+    {
+        return $this->hasMany('App\Models\Category', 'top_cat_id', 'id');
+    }
     public function top_category(){
         return $this->belongsTo('App\Models\Category', 'top_cat_id')->withDefault([
             'cat_name_en'=>'Top Category'

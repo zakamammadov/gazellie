@@ -41,7 +41,8 @@ Users
                 <thead>
                     <tr>
                       <th>№</th>
-                      <th>Product name</th>
+                      <th>Name</th>
+                      <th>Image</th>
                       <th>Slug</th>
                       <th>Price</th>
                       <th>Created date</th>
@@ -63,6 +64,11 @@ Users
                     <tr>
 
                       <td>{{$say++;}}</td>
+                      <td>
+
+                        @if ($entry->product_main_image!=null)
+                        <img src="{{asset('uploads/products/'.$entry->product_main_image)}}" style="height: 60px;width:100px;margin-right: 20px;" class="thumbnail pull-left">
+                    @endif                </td>
                       <td>{{$entry->product_name_az}}</td>
                       <td>{{$entry->slug}}
                       </td>
