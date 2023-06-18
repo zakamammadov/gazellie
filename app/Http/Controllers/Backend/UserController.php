@@ -59,10 +59,10 @@ class UserController extends Controller
             $users = User::where('name', 'like', "%$search%")
                 ->orWhere('email', 'like', "%$search%")
                 ->orderByDesc('created_at')
-                ->paginate(3)
+                ->paginate(10)
                 ->appends('search', $search);
         } else{
-            $users=User::orderByDesc('created_at')->paginate(3);
+            $users=User::orderByDesc('created_at')->paginate(10);
 
         }
 return view('backend.users.users')->with('users',$users);
@@ -124,6 +124,13 @@ if($id>0){
                 'mob_phone' => request('mob_phone')
             ]
         );
+
+// if(request('send_mail')==1){
+//     mail("zakamammadov18@gmail.com","slam","dddd");
+
+// }
+
+
 
         return redirect()
             ->route('admin.users')
