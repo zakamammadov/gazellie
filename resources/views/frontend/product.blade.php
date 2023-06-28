@@ -8,37 +8,47 @@
                 <div class="col-12 col-lg-6">
                     <div class="product-slider-wrapper d-flex justify-content-between">
                           <div class="slider-nav">
-                            <div class="product-helper_img">
+                            {{-- <div class="product-helper_img">
                                     <img src="{{asset('front')}}/img/single-product/Group 104.png" alt="">
                             </div>
                             <div class="product-helper_img">
                                     <img src="{{asset('front')}}/img/single-product/product1.png" alt="">
-                            </div>
+                            </div> --}}
                           </div>
                           <div class="product-slider" id="lightgallery">
-                            <a class="product-main_img test d-block text-decoration-none" href="assets/img/single-product/Group 104.png" data-lg-size="1600-2400">
-                              <img src="{{asset('front')}}/img/single-product/Group 104.png" data-lg-size="1600-2400" alt="">
+                            <a class="product-main_img test d-block text-decoration-none" href="{{asset('uploads/products/'.$product->product_main_image)}}" data-lg-size="1600-2400">
+                              <img src="{{asset('uploads/products/'.$product->product_main_image)}}" data-lg-size="1600-2400" alt="">
                             </a>
-                            <a class="product-main_img demo-trigger_second d-block text-decoration-none" href="assets/img/single-product/product2.png">
+                            {{-- <a class="product-main_img demo-trigger_second d-block text-decoration-none" href="assets/img/single-product/product2.png">
                               <img src="{{asset('front')}}/img/single-product/product2.png" alt="">
-                            </a>
+                            </a> --}}
                         </div>
                     </div>
                     <div class="product-slider_price">
-                        <div class="product-slider_code">Код товара: FC-012</div>
+                        <div class="product-slider_code">{{$product->product_name_ru}}</div>
                         <div class="buy d-flex align-items-center mt-3 justify-content-end">
-                            <div class="single-product_price">Цена:<span>25<sup>₼</sup></span></div>
-                            <button class="success-btn ms-2">Купить</button>
+                            <div class="single-product_price">Цена:<span>{{$product->price}}<sup>₼</sup></span></div>
+
+
+
+                      <form action="{{ route('cart.add') }}" method="post">
+                        {{ csrf_field() }}
+
+                        <input type="hidden" name="id" value="{{ $product->id }}">
+                      <button class="success-btn ms-2" type="submit">Купить</button>
+                    </form>
                     </div>
                     </div>
                 </div>
                 <div class="col-12 col-lg-6">
                     <div class="single-product_content">
-                      <h3 class="single-prod_title">Увлажняющее очищающее молочко</h3>
-                      <span class="single-prod_measure">250 мл</span>
-                      <p class="single-prod_descr">Богатый витаминами и ценными маслами состав молочка тщательно удаляет макияж и загрязнения, нормализует водный баланс, увлажняет и разглаживает кожу.</p>
+                      <h3 class="single-prod_title">{{$product->price}}</h3>
+                      {{-- <span class="single-prod_measure">250 мл</span> --}}
+                      <p class="single-prod_descr">{{strip_tags($product->description_ru)}}</p>
+
+
                       <!-- accordion starts -->
-                      <div class="product-accordion">
+                      {{-- <div class="product-accordion">
                           <div class="accordion accordion-flush" id="accordionFlushExample">
                               <div class="accordion-item">
                                 <h2 class="accordion-header" id="flush-headingOne">
@@ -61,7 +71,7 @@
                                 </div>
                               </div>
                             </div>
-                      </div>
+                      </div> --}}
                       <!-- accordion ends -->
                   </div>
                 </div>
@@ -74,82 +84,34 @@
         <div class="container">
             <h6 class="product-list_title">Похожие продукты</h6>
             <div class="row">
+@foreach ($pr_category as $pr)
+
                 <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
                     <div class="single-product">
                         <div class="sing-pic_wrapper">
                             <div class="sing-product_pic">
-                                <img src="{{asset('front')}}/img/product/product.png" alt="product">
+                                <img src="{{asset('uploads/products/'.$product->product_main_image)}}" alt="product">
                             </div>
                         </div>
                         <div class="single-product_details">
                             <strong class="single-product_code">Код : FC-12</strong>
-                            <p class="single-product_descr">Увлажняющее очищающее молочко</p>
-                            <div class="single-product_descr">Обьемы: 250 мл, 500 мл</div>
-                            <div class="single-product_price">Цена:<span>25<sup>₼</sup></span></div>
+                            <p class="single-product_descr">{{$pr->product_name_ru}}</p>
+                            <div class="single-product_descr">{{strip_tags($pr->description_ru)}}</div>
+                            <div class="single-product_price">Цена:<span>{{$pr->price}}<sup>₼</sup></span></div>
                         </div>
                         <div class="single-product_btns">
                             <a href="#" class="more-btn">Подробнее</a>
-                            <button class="buy-btn" type="button">Купить</button>
-                        </div>
+
+                            <form action="{{ route('cart.add') }}" method="post">
+                                {{ csrf_field() }}
+
+                                <input type="hidden" name="id" value="{{ $product->id }}">
+                              <button class="buy-btn" type="submit">Купить</button>
+                            </form>                        </div>
                     </div>
                 </div>
-                <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                    <div class="single-product">
-                        <div class="sing-pic_wrapper">
-                            <div class="sing-product_pic">
-                                <img src="{{asset('front')}}/img/product/product.png" alt="product">
-                            </div>
-                        </div>
-                        <div class="single-product_details">
-                            <strong class="single-product_code">Код : FC-12</strong>
-                            <p class="single-product_descr">Увлажняющее очищающее молочко</p>
-                            <div class="single-product_descr">Обьемы: 250 мл, 500 мл</div>
-                            <div class="single-product_price">Цена:<span>25<sup>₼</sup></span></div>
-                        </div>
-                        <div class="single-product_btns">
-                            <a href="#" class="more-btn">Подробнее</a>
-                            <button class="buy-btn" type="button">Купить</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                    <div class="single-product">
-                        <div class="sing-pic_wrapper">
-                            <div class="sing-product_pic">
-                                <img src="{{asset('front')}}/img/product/product.png" alt="product">
-                            </div>
-                        </div>
-                        <div class="single-product_details">
-                            <strong class="single-product_code">Код : FC-12</strong>
-                            <p class="single-product_descr">Увлажняющее очищающее молочко</p>
-                            <div class="single-product_descr">Обьемы: 250 мл, 500 мл</div>
-                            <div class="single-product_price">Цена:<span>25<sup>₼</sup></span></div>
-                        </div>
-                        <div class="single-product_btns">
-                            <a href="#" class="more-btn">Подробнее</a>
-                            <button class="buy-btn" type="button">Купить</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-                    <div class="single-product">
-                        <div class="sing-pic_wrapper">
-                            <div class="sing-product_pic">
-                                <img src="{{asset('front')}}/img/product/product.png" alt="product">
-                            </div>
-                        </div>
-                        <div class="single-product_details">
-                            <strong class="single-product_code">Код : FC-12</strong>
-                            <p class="single-product_descr">Увлажняющее очищающее молочко</p>
-                            <div class="single-product_descr">Обьемы: 250 мл, 500 мл</div>
-                            <div class="single-product_price">Цена:<span>25<sup>₼</sup></span></div>
-                        </div>
-                        <div class="single-product_btns">
-                            <a href="#" class="more-btn">Подробнее</a>
-                            <button class="buy-btn" type="button">Купить</button>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
+
             </div>
         </div>
       </section>

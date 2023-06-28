@@ -29,19 +29,22 @@ use Illuminate\Support\Facades\Route;
 // frontend start
 Route::get('/',[HomePageController::class,'index'])->name('home');
 Route::get('/category/{cat_slug}',[CatController::class,'index'])->name('category');
-Route::get('/product/{prod_slug}',[ProdController::class,'index'])->name('product');
+Route::get('/product/{prod_slug?}',[ProdController::class,'index'])->name('product');
 
 Route::group(['prefix' => 'cart'], function () {
     Route::get('/', [CartController::class,'index'])->name('cart');
     Route::post('/add',  [CartController::class,'add'])->name('cart.add');
-    Route::get('/delete/{row_id}', [CartController::class,'destroy'])->name('cart.destroy');
+    Route::delete('/delete/{row_id}', [CartController::class,'destroy'])->name('cart.destroy');
     Route::post('/remove_all', [CartController::class,'remove_all'])->name('cart.remove_all');
-    Route::post('/edit/{row_id}', [CartController::class,'edit'])->name('cart.edit');
+    Route::patch('/edit/{row_id}', [CartController::class,'edit'])->name('cart.edit');
+    // Route::patch('/guncelle/{rowid}', [CartController::class,'guncelle'])->name('sepet.guncelle');
+
 });
 
+Route::group(['middleware' => 'auth'], function () {
 Route::get('/checkout',[CheckoutController::class,'index'])->name('checkout');
 Route::post('/checkout',  [CheckoutController::class,'pay'])->name('pay');
-
+});
 
 Route::group(['prefix' => 'user'], function () {
     Route::get('/login-form', [User_Controller::class,'log_reg_form'])->name('user.log_reg_form');
@@ -52,6 +55,17 @@ Route::group(['prefix' => 'user'], function () {
     Route::get('/activation/{key}',  [User_Controller::class,'activation'])->name('activation');
     Route::post('/logout', [User_Controller::class,'logout'])->name('user.logout');
 });
+
+
+Route::group(['prefix' => 'cart'], function () {
+    Route::get('/', [CartController::class,'index'])->name('cart');
+    Route::post('/add',[CartController::class,'add'])->name('cart.add');
+    Route::delete('/remove/{rowid}', [CartController::class,'remove'])->name('cart.remove');
+    Route::delete('/remove_all', [CartController::class,'remove_all'])->name('cart.remove_all');
+    Route::patch('/update/{rowid}', [CartController::class,'update'])->name('cart.update');
+});
+
+
 
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'admin']], function () {

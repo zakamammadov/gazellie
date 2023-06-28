@@ -9,3 +9,4 @@
 <!-- slick slider -->
 <link rel="stylesheet" href="{{asset('front')}}/libs/font-awesome/all.min.css">
 <link rel="stylesheet" href="{{asset('front')}}/css/styles.css">
+<meta name="csrf-token" content="{{ csrf_token() }}">

@@ -35,7 +35,7 @@ $entry= new Category;
 if($id>0){
     $entry=Category::find($id);
 }
-$category=Category::all();
+    $category=Category::all();
 
        return view ('backend.category.form',compact('entry','category'));
 

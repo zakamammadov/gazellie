@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -12,13 +13,24 @@ use Illuminate\Support\Facades\Mail;
 use Auth;
 class User_Controller extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('guest')->except('logout');
+    }
+
+
     public function login_form()
     {
-        return view('frontend.user.login');
+        $categories = Category::whereRaw('top_cat_id is null')->get();
+
+        return view('frontend.user.login',compact('categories'));
     }
     public function log_reg_form()
     {
-        return view('frontend.user.log_reg_form');
+        $categories = Category::whereRaw('top_cat_id is null')->get();
+
+        return view('frontend.user.log_reg_form',compact('categories'));
     }
 
      public function login()
@@ -53,7 +65,9 @@ class User_Controller extends Controller
 
     public function register_form()
     {
-        return view('frontend.user.register');
+        $categories = Category::whereRaw('top_cat_id is null')->get();
+
+        return view('frontend.user.register',compact('categories'));
     }
 
     public function register()

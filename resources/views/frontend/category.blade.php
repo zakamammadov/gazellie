@@ -5,86 +5,51 @@
     <!-- product list starts -->
 <section class="product-list">
   <div class="container">
-      <h6 class="product-list_title">Очищающие средства</h6>
+      <h6 class="product-list_title">{{$category->cat_name_ru}}</h6>
       <div class="row">
+
+@if (count($products)==0)
+  <h1 style="text-align: center">  {{'Product not found'}}</h1>
+@endif
+
+
+        @foreach ($products as $product )
+
           <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
               <div class="single-product">
                   <div class="sing-pic_wrapper">
                       <div class="sing-product_pic">
-                          <img src="assets/img/product/product.png" alt="product">
+                          <img src="{{asset('uploads/products/'.$product->product_main_image)}}" alt="product">
                       </div>
                   </div>
                   <div class="single-product_details">
-                      <strong class="single-product_code">Код : FC-12</strong>
-                      <p class="single-product_descr">Увлажняющее очищающее молочко</p>
-                      <div class="single-product_descr">Обьемы: 250 мл, 500 мл</div>
-                      <div class="single-product_price">Цена:<span>25<sup>₼</sup></span></div>
+                      <strong class="single-product_code">{{$product->product_name_ru}}</strong>
+                      <p class="single-product_descr">{{strip_tags($product->description_ru)}}</p>
+                      {{-- <div class="single-product_descr">Обьемы: 250 мл, 500 мл</div> --}}
+                    @if (Auth::user())
+
+                      <div class="single-product_price">Цена:<span>{{$product->price}}<sup>₼</sup></span></div>
+                      @endif
+
                   </div>
                   <div class="single-product_btns">
-                      <a href="#" class="more-btn">Подробнее</a>
-                      <button class="buy-btn" type="button">Купить</button>
+                      <a href="{{route('product',$product->slug)}}" class="more-btn">Подробнее</a>
+
+
+                      <form action="{{ route('cart.add') }}" method="post">
+                        {{ csrf_field() }}
+
+                        <input type="hidden" name="id" value="{{ $product->id }}">
+                      <button class="buy-btn" type="submit">Купить</button>
+                    </form>
+
                   </div>
               </div>
           </div>
-          <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-              <div class="single-product">
-                  <div class="sing-pic_wrapper">
-                      <div class="sing-product_pic">
-                          <img src="assets/img/product/product.png" alt="product">
-                      </div>
-                  </div>
-                  <div class="single-product_details">
-                      <strong class="single-product_code">Код : FC-12</strong>
-                      <p class="single-product_descr">Увлажняющее очищающее молочко</p>
-                      <div class="single-product_descr">Обьемы: 250 мл, 500 мл</div>
-                      <div class="single-product_price">Цена:<span>25<sup>₼</sup></span></div>
-                  </div>
-                  <div class="single-product_btns">
-                      <a href="#" class="more-btn">Подробнее</a>
-                      <button class="buy-btn" type="button">Купить</button>
-                  </div>
-              </div>
-          </div>
-          <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-              <div class="single-product">
-                  <div class="sing-pic_wrapper">
-                      <div class="sing-product_pic">
-                          <img src="assets/img/product/product.png" alt="product">
-                      </div>
-                  </div>
-                  <div class="single-product_details">
-                      <strong class="single-product_code">Код : FC-12</strong>
-                      <p class="single-product_descr">Увлажняющее очищающее молочко</p>
-                      <div class="single-product_descr">Обьемы: 250 мл, 500 мл</div>
-                      <div class="single-product_price">Цена:<span>25<sup>₼</sup></span></div>
-                  </div>
-                  <div class="single-product_btns">
-                      <a href="#" class="more-btn">Подробнее</a>
-                      <button class="buy-btn" type="button">Купить</button>
-                  </div>
-              </div>
-          </div>
-          <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-              <div class="single-product">
-                  <div class="sing-pic_wrapper">
-                      <div class="sing-product_pic">
-                          <img src="assets/img/product/product.png" alt="product">
-                      </div>
-                  </div>
-                  <div class="single-product_details">
-                      <strong class="single-product_code">Код : FC-12</strong>
-                      <p class="single-product_descr">Увлажняющее очищающее молочко</p>
-                      <div class="single-product_descr">Обьемы: 250 мл, 500 мл</div>
-                      <div class="single-product_price">Цена:<span>25<sup>₼</sup></span></div>
-                  </div>
-                  <div class="single-product_btns">
-                      <a href="#" class="more-btn">Подробнее</a>
-                      <button class="buy-btn" type="button">Купить</button>
-                  </div>
-              </div>
-          </div>
+          @endforeach
+
       </div>
-      <div class="pagination-wrapper">
+      {{-- <div class="pagination-wrapper">
           <nav aria-label="Page navigation example">
               <ul class="pagination">
                 <li class="page-item">
@@ -102,7 +67,7 @@
                 </li>
               </ul>
           </nav>
-      </div>
+      </div> --}}
   </div>
 </section>
 </main>
