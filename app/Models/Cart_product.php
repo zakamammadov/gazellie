@@ -12,4 +12,10 @@ class Cart_product extends Model
     use SoftDeletes;
     protected $guarded = [];
     protected $table='cart_product';
+
+
+    public function product()
+    {
+        return $this->belongsTo('App\Models\Product');
+    }
 }

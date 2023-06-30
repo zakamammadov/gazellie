@@ -31,7 +31,7 @@ class CartController extends Controller
 
         if (auth()->check()) {
             $active_cart_id = session('active_cart_id');
-            if (!isset($active_cart_id)) {
+            if (!$active_cart_id) {
                 $active_cart = Cart_Model::create([
                     'user_id' => auth()->id()
                 ]);
@@ -51,6 +51,15 @@ class CartController extends Controller
         ->with('message','Product added to cart');
     }
 public function destroy($rowId){
+
+    if (auth()->check()) {
+        $active_cart_id = session('active_cart_id');
+        $cartItem = Cart::get($rowId);
+        Cart_product::where('cart_id', $active_cart_id)->where('product_id', $cartItem->id)->delete();
+    }
+
+
+
     Cart::remove($rowId);
     return redirect()->route('cart')
     ->with('message_type','success')
@@ -60,8 +69,8 @@ public function destroy($rowId){
 // public function remove_all()
 // {
 //     if (auth()->check()) {
-//         $aktif_sepet_id = session('aktif_sepet_id');
-//         SepetUrun::where('sepet_id', $aktif_sepet_id)->delete();
+//         $active_cart_id = session('active_cart_id');
+//         Cart_product::where('cart_id', $active_cart_id)->delete();
 //     }
 
 //     Cart::destroy();
@@ -85,17 +94,17 @@ public function edit($row_id)
         return response()->json(['success' => false]);
     }
 
-    // if (auth()->check()) {
-    //     $aktif_sepet_id = session('aktif_sepet_id');
-    //     $cartItem = Cart::get($rowid);
+    if (auth()->check()) {
+        $active_cart_id = session('active_cart_id');
+        $cartItem = Cart::get($row_id);
 
-    //     if (request('adet') == 0)
-    //         SepetUrun::where('sepet_id', $aktif_sepet_id)->where('urun_id', $cartItem->id)
-    //             ->delete();
-    //     else
-    //         SepetUrun::where('sepet_id', $aktif_sepet_id)->where('urun_id', $cartItem->id)
-    //             ->update(['adet' => request('adet')]);
-    // }
+        if (request('adet') == 0)
+            Cart_product::where('cart_id', $active_cart_id)->where('product_id', $cartItem->id)
+                ->delete();
+        else
+            Cart_product::where('cart_id', $active_cart_id)->where('product_id', $cartItem->id)
+                ->update(['quantity' => request('adet')]);
+    }
 
     Cart::update($row_id, request('adet'));
 

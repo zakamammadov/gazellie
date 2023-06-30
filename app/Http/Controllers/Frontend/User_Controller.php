@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Models\User;
+use App\Models\Cart_Model;
+use App\Models\Cart_product;
+use Cart;
 use App\Mail\UserRegisterMail;
 use Illuminate\Support\Facades\Mail;
 use Auth;
@@ -50,7 +53,53 @@ class User_Controller extends Controller
 
 
         if (auth()->attempt($credentials)) {
-   request()->session()->regenerate();
+//    request()->session()->regenerate();
+
+$active_cart_id = session('active_cart_id');
+
+//    $active_cart_id = Cart_Model::active_cart_id();
+   if (is_null($active_cart_id)) {
+       $active_cart = Cart_Model::create(['user_id' => auth()->id()]);
+       $active_cart_id = $active_cart->id;
+   }
+   session()->put('active_cart_id', $active_cart_id);
+
+   if (Cart::count() > 0) {
+       foreach (Cart::content() as $cartItem) {
+           $cartProduct = Cart_product::firstOrNew(['cart_id' => $active_cart_id, 'product_id' => $cartItem->id]);
+           $cartProduct->quantity += $cartItem->qty;
+           $cartProduct->price = $cartItem->price;
+           $cartProduct->image = $cartItem->image;
+           $cartProduct->status = "Waiting";
+           $cartProduct->save();
+       }
+   }
+
+   Cart::destroy();
+   $cartProducts = Cart_product::with('product')->where('cart_id', $active_cart_id)->get();
+   foreach ($cartProducts as $cartProduct) {
+
+
+    $data['id'] = $cartProduct->product->id;
+    $data['qty'] = $cartProduct->quantity;
+    $data['name'] = $cartProduct->product->product_name_az;
+    $data['price'] = $cartProduct->price;
+    $data['weight'] = $cartProduct->price;
+    $data['options']['slug'] = $cartProduct->product->slug;
+    $data['options']['image'] =$cartProduct->image;
+    $cartItem=Cart::add($data);
+
+
+
+    //    Cart::add($cartProduct->product->id, $cartProduct->product->product_name_az, $cartProduct->quantity, $cartProduct->price, ['slug' => $cartProduct->product->slug]);
+   }
+
+
+
+
+
+
+
  return redirect()->intended('/');
 
 }else{

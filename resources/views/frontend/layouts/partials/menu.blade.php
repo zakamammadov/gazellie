@@ -54,13 +54,13 @@
                   if ($route=="home") {?>
                       <img src="{{asset('front')}}/img/index/glass-icon.svg" alt="glass icon" >
                                   </button>
-                                  <a href="#" class="cart-icon">
+                                  <a href="{{route('cart')}}" class="cart-icon">
                                   <img src="{{asset('front')}}/img/index/cart-icon.svg" alt="cart icon">
                                   </a>
                 <?php  }else{?>
                           <img src="{{asset('front')}}/img/about/glass-dark.svg" alt="glass icon" >
                                       </button>
-                                      <a href="#" class="cart-icon">
+                                      <a href="{{route('cart')}}" class="cart-icon">
                                         <img src="{{asset('front')}}/img/about/cart-dark.svg" alt="cart icon">
                                       </a>
 

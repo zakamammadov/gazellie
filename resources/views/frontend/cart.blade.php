@@ -54,8 +54,10 @@
                         </div>
                       </div>
                       <div class="basket-item_price">
-                        <h6 class="price">{{ $productCartItem->subtotal }}<sup>₼</sup></h6>
+                        @if (auth()->check())
 
+                        <h6 class="price">{{ $productCartItem->subtotal }}<sup>₼</sup></h6>
+@endif
                         <form action="{{ route('cart.destroy', $productCartItem->rowId) }}" method="post">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
@@ -87,13 +89,15 @@
         </div>
         <!-- basket items ends-->
         <div class="buyer-card_container">
+            @if (auth()->check())
+
           <div class="row">
             <div class="col-12 col-sm-6">
               <div class="buyer-card d-flex align-items-center justify-content-end">
-                <span>Карта покупателя</span>
+                {{-- <span>Карта покупателя</span>
                 <div class="card-input-cover">
                   <input type="text" placeholder="xxxxxxx">
-                </div>
+                </div> --}}
               </div>
             </div>
             <div class="col-12 col-sm-6">
@@ -102,12 +106,25 @@
               </div>
             </div>
           </div>
+          @endif
+
+          @if (auth()->check())
+
+
           <div class="buyer-card_btns d-flex justify-content-between">
             <a href="product.html" class="empty-btn">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"/></svg>Вернуться назад</a>
             <a href="order.html" class="success-btn"> Оформить заказ</a>
           </div>
+@else
+<div class="buyer-card_btns d-flex justify-content-between">
+    <a href="product.html" class="empty-btn">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"/></svg>Вернуться назад</a>
+    <a href="{{route('user.log_reg_form')}}" class="success-btn">Войти</a>
+  </div>
 
+
+@endif
 
         </div>
       </div>
