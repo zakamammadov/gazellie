@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use App\Models\User;
 use App\Models\Cart_Model;
 use App\Models\Cart_product;
+use App\Models\UserDetal;
 use Cart;
 use App\Mail\UserRegisterMail;
 use Illuminate\Support\Facades\Mail;
@@ -177,7 +178,7 @@ $active_cart_id = session('active_cart_id');
 
 $user->save();
 
-        // $user->detay()->save(new KullaniciDetay());
+        $user->detail()->save(new UserDetal());
 
         //Mail::to(request('email'))->send(new UserRegisterMail($user));
 

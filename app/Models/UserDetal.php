@@ -11,4 +11,11 @@ class UserDetal extends Model
     public $timestamps = false;
     protected $guarded = [];
     use HasFactory;
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
+
+
+
 }
